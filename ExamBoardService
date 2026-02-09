@@ -1,0 +1,10 @@
+package com.example.examBoard.service;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class ExamBoardService {
+    public String getExamRegNum(){
+        return "246736449";
+    }
+}
