@@ -1,0 +1,46 @@
+package com.example.studentRecord.DTO;
+
+public class StudentResult {
+
+    private String studentName;
+    private String subject;
+    private int score;
+    private String ExamNo;
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+
+
+    public String getExamNo() {
+        return ExamNo;
+    }
+
+    public void setExamNo(String examNo) {
+        ExamNo = examNo;
+    }
+
+
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+}
