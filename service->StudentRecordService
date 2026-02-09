@@ -1,0 +1,78 @@
+package com.example.studentRecord.service;
+import java.util.List;
+
+import com.example.studentRecord.model.StudentRecord;
+import com.example.studentRecord.DTO.StudentResult;
+import com.example.studentRecord.repository.StudentRecordRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
+
+@Service
+public class StudentRecordService {
+
+    private final RestClient restClient;
+    public StudentRecordService(RestClient restClient){
+        this.restClient=restClient;
+    }
+
+    @Autowired
+    private StudentRecordRepository repository;
+
+    // CREATE
+    public StudentRecord saveScore(StudentRecord record) {
+        return repository.save(record);
+    }
+
+    // GET ALL
+    public List<StudentRecord> getAllScores() {
+        return repository.findAll();
+    }
+
+    // GET ALL
+    public List<StudentRecord> getAllScoresWithExamNo() {
+
+        //get exam number bu calling exam service and store in the varriable
+        //String examNo = from service exam
+        // studentresult = EXamno, Studnt name
+
+        return repository.findAll();
+    }
+
+    // GET BY ID
+    public StudentResult getScoreById(Long id) {
+        StudentResult studentResult = new StudentResult();
+        StudentRecord rec =  repository.findById(id) .orElseThrow(() -> new RuntimeException("Record not found"));
+        studentResult.setStudentName(rec.getStudentName());
+        studentResult.setScore(rec.getScore());
+        studentResult.setSubject(rec.getSubject());
+
+        //replace with exam service call
+        String examNo = restClient.get().uri("/exam").retrieve().body(String.class);
+
+        studentResult.setExamNo(examNo);
+        return studentResult;
+    }
+
+    // GET BY NAME
+    public List<StudentRecord> getScoresByStudentName(String name) {
+        return repository.findByStudentName(name);
+    }
+
+    // UPDATE move to service
+    public StudentRecord updateScore(long id, StudentRecord updated) {
+        StudentRecord existing = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Record not found"));
+
+        existing.setStudentName(updated.getStudentName());
+        existing.setSubject(updated.getSubject());
+        existing.setScore(updated.getScore());
+
+        return repository.save(existing);
+    }
+
+    // DELETE
+    public void deleteScore(long id) {
+        repository.deleteById(id);
+    }
+}
