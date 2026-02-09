@@ -1,1 +1,64 @@
+package com.example.studentRecord.controller;
+
+import com.example.studentRecord.DTO.StudentResult;
+import com.example.studentRecord.model.StudentRecord;
+import com.example.studentRecord.service.StudentRecordService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/scores")
+public class StudentRecordController {
+
+    @Autowired
+    private StudentRecordService scoreService;
+
+    // CREATE
+    @PostMapping
+    public StudentRecord addScore(@RequestBody StudentRecord studentScore) {
+        return scoreService.saveScore(studentScore);
+    }
+
+    // UPDATE
+    @PutMapping("/{id}")
+    public StudentRecord updateScore(@PathVariable long id,
+                                     @RequestBody StudentRecord updatedScore) {
+        return scoreService.updateScore(id, updatedScore);
+    }
+
+    // DELETE
+    @DeleteMapping("/{id}")
+    public String deleteScore(@PathVariable long id) {
+        scoreService.deleteScore(id);
+        return "Deleted successfully!";
+    }
+
+    // GET BY NAME
+    @GetMapping("/student/{name}")
+    public ResponseEntity<List<StudentRecord>> getScoresByName(@PathVariable String name) {
+        List<StudentRecord> scores = scoreService.getScoresByStudentName(name);
+        return ResponseEntity.ok(scores);
+    }
+
+    // GET ALL
+    @GetMapping
+    public List<StudentRecord> getAllScores() {
+        return scoreService.getAllScores();
+    }
+
+    // SAMPLE ENDPOINT
+    @GetMapping("/college")
+    public String student() {
+        return "welcome to rec college";
+    }
+
+    @GetMapping("/{id}")
+    public StudentResult studentExam(@PathVariable long id) {
+        return scoreService.getScoreById(id);
+
+    }
+}
 
