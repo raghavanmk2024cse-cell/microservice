@@ -1,0 +1,18 @@
+package com.example.examBoard.controller;
+import com.example.examBoard.service.ExamBoardService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/exam")
+public class ExamBoardController {
+    @Autowired
+    public ExamBoardService examBoardService;
+
+    @GetMapping
+    public String RegNumber(){
+        return examBoardService.getExamRegNum();
+    }
+}
