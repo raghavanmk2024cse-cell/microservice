@@ -1,0 +1,47 @@
+package com.example.studentRecord.model;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "student_record")
+public class StudentRecord {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String studentName;
+    private String subject;
+    private int score;
+
+    public StudentRecord() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+}
